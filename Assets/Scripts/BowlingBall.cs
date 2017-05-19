@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BowlingBall : MonoBehaviour {
 
-	public float launchSpeed;
-
 	private Rigidbody rigidBody;
 	private AudioSource rollingSound;
 
@@ -14,16 +12,26 @@ public class BowlingBall : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody> ();
 		rollingSound = GetComponent<AudioSource> ();
 
-		Launch ();
+		rigidBody.useGravity = false;
 	}
 
-	void Launch ()
+	public void Launch (Vector3 velocity)
 	{
-		rigidBody.velocity = new Vector3 (0, 0, launchSpeed);
+		rigidBody.useGravity = true;
+		rigidBody.velocity = velocity;
 		rollingSound.Play ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(DragLaunch.dragstart){
+			//MoveWithTouch(Input.mousePosition);
+		}
 	}
+
+	public void MoveWithTouch(Vector3 touchPos){
+		transform.position = touchPos;
+	}
+
 }
