@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BowlingBall : MonoBehaviour {
 
+	public bool inPlay = false;
 	private Rigidbody rigidBody;
 	private AudioSource rollingSound;
 
@@ -17,6 +18,7 @@ public class BowlingBall : MonoBehaviour {
 
 	public void Launch (Vector3 velocity)
 	{
+		inPlay = true;
 		rigidBody.useGravity = true;
 		rigidBody.velocity = velocity;
 		rollingSound.Play ();

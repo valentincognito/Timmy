@@ -34,4 +34,11 @@ public class DragLaunch : MonoBehaviour {
 
 		dragstart = false;
 	}
+
+	public void MoveStart(float amount){
+		if(!bowlingBall.inPlay){
+			bowlingBall.transform.Translate (new Vector3(amount, 0, 0));
+	
+		}
+	}
 }
