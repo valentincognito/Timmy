@@ -25,6 +25,21 @@ public class PinSetter : MonoBehaviour {
 		}
 	}
 
+	public void RaisePins(){
+		foreach(BowlingPin pin in GameObject.FindObjectsOfType <BowlingPin>()){
+			pin.Raise ();
+		}
+	}
+	public void LowerPins(){
+		foreach(BowlingPin pin in GameObject.FindObjectsOfType <BowlingPin>()){
+			pin.Lower ();
+		}
+	}
+
+	public void RenewPins(){
+
+	}
+
 	void CheckStanding(){
 		int currentStanding = CountStanding ();
 

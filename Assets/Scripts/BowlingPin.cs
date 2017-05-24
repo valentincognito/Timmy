@@ -5,15 +5,12 @@ using UnityEngine;
 public class BowlingPin : MonoBehaviour {
 
 	public float standingTreshold;
+	public float distanceToRaise = 40f;
 
-	// Use this for initialization
+	private Rigidbody rigidBody;
+
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//print (name + " - " + IsStanding());
+		rigidBody = GetComponent<Rigidbody> ();
 	}
 
 	public bool IsStanding(){
@@ -28,5 +25,21 @@ public class BowlingPin : MonoBehaviour {
 		} else {
 			return false;
 		}
+	}
+
+	public void Raise(){
+		rigidBody.useGravity = false;
+		if(IsStanding()){
+			transform.Translate (new Vector3(0, distanceToRaise, 0), Space.World);
+		}
+
+	}
+	public void Lower(){
+		transform.Translate (new Vector3(0, -distanceToRaise, 0), Space.World);
+		rigidBody.useGravity = true;
+	}
+
+	public void Renew(){
+
 	}
 }
