@@ -7,6 +7,7 @@ public class BowlingBall : MonoBehaviour {
 	public bool inPlay = false;
 	private Rigidbody rigidBody;
 	private AudioSource rollingSound;
+	private Vector3 bowlingBallStartPos;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,8 @@ public class BowlingBall : MonoBehaviour {
 		rollingSound = GetComponent<AudioSource> ();
 
 		rigidBody.useGravity = false;
+
+		bowlingBallStartPos = transform.position;
 	}
 
 	public void Launch (Vector3 velocity)
@@ -22,6 +25,14 @@ public class BowlingBall : MonoBehaviour {
 		rigidBody.useGravity = true;
 		rigidBody.velocity = velocity;
 		rollingSound.Play ();
+	}
+
+	public void Reset(){
+		inPlay = false;
+		transform.position = bowlingBallStartPos;
+		rigidBody.useGravity = false;
+		rigidBody.velocity = Vector3.zero;
+		rigidBody.angularVelocity = Vector3.zero;
 	}
 	
 	// Update is called once per frame
