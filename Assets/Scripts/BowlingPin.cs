@@ -38,8 +38,5 @@ public class BowlingPin : MonoBehaviour {
 		transform.Translate (new Vector3(0, -distanceToRaise, 0), Space.World);
 		rigidBody.useGravity = true;
 	}
-
-	public void Renew(){
-
-	}
+		
 }
