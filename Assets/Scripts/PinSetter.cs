@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class PinSetter : MonoBehaviour {
 
-	public int lastStandingCount = -1;
 	public Text standingDisplay;
 	public GameObject PinSet;
+	public bool ballOutOfPlay = false;
 
-	private bool ballEnteredBox = false;
-	private float lastChangeTime;
+	private int lastStandingCount = -1;
 	private int lastSettledCount = 10;
-	private BowlingBall bowlingBall;
+	private float lastChangeTime;
+
 	private ActionMaster actionMaster = new ActionMaster();
+	private BowlingBall bowlingBall;
 	private Animator animator;
 
 	// Use this for initialization
@@ -24,8 +25,9 @@ public class PinSetter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(ballEnteredBox){
+		if(ballOutOfPlay){
 			standingDisplay.text = CountStanding ().ToString ();
+			standingDisplay.color = Color.red;
 			UpdateStandingCountAndSettle ();
 		}
 	}
@@ -83,7 +85,7 @@ public class PinSetter : MonoBehaviour {
 
 		bowlingBall.Reset ();
 		lastStandingCount = -1;
-		ballEnteredBox = false;
+		ballOutOfPlay = false;
 		standingDisplay.color = Color.green;
 	}
 
@@ -97,14 +99,6 @@ public class PinSetter : MonoBehaviour {
 		}
 
 		return standCount;
-	}
-
-	void OnTriggerEnter(Collider collider)
-	{
-		if(collider.gameObject.GetComponent<BowlingBall>()){
-			ballEnteredBox = true;
-			standingDisplay.color = Color.red;
-		}
 	}
 
 	void OnTriggerExit(Collider collider)
