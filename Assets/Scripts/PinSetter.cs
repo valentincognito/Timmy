@@ -11,11 +11,15 @@ public class PinSetter : MonoBehaviour {
 
 	private bool ballEnteredBox = false;
 	private float lastChangeTime;
+	private int lastSettledCount = 10;
 	private BowlingBall bowlingBall;
+	private ActionMaster actionMaster = new ActionMaster();
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
 		bowlingBall = GameObject.FindObjectOfType<BowlingBall> ();
+		animator = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -60,6 +64,23 @@ public class PinSetter : MonoBehaviour {
 	}
 
 	void PinHaveSettled(){
+		int standing = CountStanding ();
+		int pinFall = lastSettledCount - standing;
+		lastSettledCount = standing;
+
+		ActionMaster.Action action = actionMaster.Bowl (pinFall);
+
+		if(action == ActionMaster.Action.Tidy){
+			animator.SetTrigger ("tidyTrigger");
+		}else if(action == ActionMaster.Action.EndTurn){
+			animator.SetTrigger ("resetTrigger");
+			lastSettledCount = 10;
+		}else if(action == ActionMaster.Action.Reset){
+			animator.SetTrigger ("resetTrigger");
+			lastSettledCount = 10;
+		}
+
+
 		bowlingBall.Reset ();
 		lastStandingCount = -1;
 		ballEnteredBox = false;
