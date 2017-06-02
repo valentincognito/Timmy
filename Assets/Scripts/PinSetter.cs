@@ -22,7 +22,7 @@ public class PinSetter : MonoBehaviour {
 	void Update () {
 		if(ballEnteredBox){
 			standingDisplay.text = CountStanding ().ToString ();
-			CheckStanding ();
+			UpdateStandingCountAndSettle ();
 		}
 	}
 
@@ -42,9 +42,10 @@ public class PinSetter : MonoBehaviour {
 		newPins.transform.position += new Vector3 (0, 20, 0);
 	}
 
-	void CheckStanding(){
+	void UpdateStandingCountAndSettle(){
 		int currentStanding = CountStanding ();
 
+		// Check if the pins are still moving
 		if (currentStanding != lastStandingCount) {
 			lastChangeTime = Time.time;
 			lastStandingCount = currentStanding;
@@ -52,6 +53,7 @@ public class PinSetter : MonoBehaviour {
 		}
 
 		float settleTime = 3f;
+		// If the pins haven't move for more than the settleTim then settle
 		if ((Time.time - lastChangeTime) > settleTime) {
 			PinHaveSettled ();
 		}
